@@ -14,7 +14,6 @@ var appShellFilesToCache = [
 self.addEventListener('install', (e) => {
   e.waitUntil(self.skipWaiting());
   log('Service Worker: Installed');
-
   /*e.waitUntil(
     caches.open(cacheName).then((cache) => {
       log('Service Worker: Caching App Shell');

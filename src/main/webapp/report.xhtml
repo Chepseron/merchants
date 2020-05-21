@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="true"/>
+    </ui:define>
+
+    <ui:define name="title">
+        <ui:include src="meters.xhtml"/>
+    </ui:define>
+
+
+
+
+    <ui:define name="body">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <p:separator/>
+                <p:panel id="spanel"  style="margin: 4em; background: transparent;  position: relative; border: 0">
+                    <h:panelGrid columns="1">
+                        <p:growl id="msgs1" sticky="true" showDetail="true" />
+                        <h:panelGrid columns="3">
+                            <p:chart type="bar" model="#{maaif.regionModel}" style="height:300px"/>
+                            <p:chart type="bar" model="#{maaif.cropModel}" style="height:300px"/>
+                            <p:chart type="bar" model="#{maaif.agrodealersperRegion}" style="height:300px"/>
+                        </h:panelGrid>
+                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"    style="background: transparent" >  
+                            <p:tab title="AGRO DEALERS">
+                                <h:form>
+
+                                    <p:dataTable var="agrodealers" value="#{maaif.agrodealersList}" widgetVar="cohortTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="cohortTable"
+                                                 emptyMessage="No agro dealer found with given criteria" filteredValue="#{maaif.agrodealersList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="cohortTable" fileName="AGRODEALERS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="cohortTable" fileName="AGRODEALERS"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="cohortTable" fileName="AGRODEALERS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="cohortTable" fileName="AGRODEALERS" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{agrodealers.companyname}" sortBy="#{agrodealers.companyname}" headerText="company">
+                                            <p:outputLabel value="#{agrodealers.companyname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealers.ownerid.name}" sortBy="#{agrodealers.ownerid.name}" headerText="owned by">
+                                            <p:outputLabel value="#{agrodealers.ownerid.name}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealers.phone}" sortBy="#{agrodealers.phone}" headerText="phone">
+                                            <p:outputLabel value="#{agrodealers.phone}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealers.contactaddress}" sortBy="#{agrodealers.contactaddress}" headerText="contact address">
+                                            <p:outputLabel value="#{agrodealers.contactaddress}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealers.regionid.province}" sortBy="#{agrodealers.regionid.province}" headerText="province">
+                                            <p:outputLabel value="#{agrodealers.regionid.province}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="AGRO DEALER PRODUCTS">
+                                <h:form>
+                                    <p:dataTable var="agrodealerProduct" value="#{maaif.agrodealerProductList}" widgetVar="perfTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="perfTable"
+                                                 emptyMessage="No product found with given criteria" filteredValue="#{maaif.agrodealerProductList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="perfTable" fileName="PRODUCTS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="perfTable" fileName="PRODUCTS"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="perfTable" fileName="PRODUCTS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="perfTable" fileName="PRODUCTS" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{agrodealerProduct.productname}" sortBy="#{agrodealerProduct.productname}" headerText="productname">
+                                            <p:outputLabel value="#{agrodealerProduct.productname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.dealerid.companyname}" sortBy="#{agrodealerProduct.dealerid.companyname}" headerText="Dealer">
+                                            <p:outputLabel value="#{agrodealerProduct.dealerid.companyname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.photourl}" sortBy="#{agrodealerProduct.photourl}" headerText="photo">
+                                            <p:outputLabel value="#{agrodealerProduct.photourl}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.price}" sortBy="#{agrodealerProduct.price}" headerText="Price">
+                                            <p:outputLabel value="#{agrodealerProduct.price}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.description}" sortBy="#{agrodealerProduct.description}" headerText="Price">
+                                            <p:outputLabel value="#{agrodealerProduct.description}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="BANKS">
+                                <h:form>
+                                    <p:dataTable var="banks" value="#{maaif.banksList}" widgetVar="projTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="projTable"
+                                                 emptyMessage="No bank found with given criteria" filteredValue="#{maaif.banksList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="projTable" fileName="BANKS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="projTable" fileName="BANKS"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="projTable" fileName="BANKS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="projTable" fileName="BANKS" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{banks.bankname}" sortBy="#{banks.bankname}" headerText="Name">
+                                            <p:outputLabel value="#{banks.bankname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{banks.code}" sortBy="#{banks.code}" headerText="code">
+                                            <p:outputLabel value="#{banks.code}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="e-VOUCHER">
+                                <h:form>
+                                    <p:dataTable var="govtpayments" value="#{maaif.govtpaymentsList}" widgetVar="resTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="resTable"
+                                                 emptyMessage="No voucher found" filteredValue="#{maaif.govtpaymentsList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="resTable" fileName="VOUCHER" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="resTable" fileName="VOUCHER"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="resTable" fileName="VOUCHER" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="resTable" fileName="VOUCHER" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{govtpayments.amount}" sortBy="#{govtpayments.amount}" headerText="amount">
+                                            <p:outputLabel value="#{govtpayments.amount}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.payee}" sortBy="#{govtpayments.payee}" headerText="payed to">
+                                            <p:outputLabel value="#{govtpayments.payee}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.createdon}" sortBy="#{govtpayments.createdon}" headerText="created on">
+                                            <p:outputLabel value="#{govtpayments.createdon}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.voucherpercentage}" sortBy="#{govtpayments.voucherpercentage}" headerText="voucher percentage awarded">
+                                            <p:outputLabel value="#{govtpayments.voucherpercentage}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+
+                            <p:tab title="PRODUCT PURCHASES">
+                                <h:form>
+                                    <p:dataTable var="userpurchase" value="#{maaif.userpurchaseList}" widgetVar="budgTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="budgTable2"
+                                                 emptyMessage="No purchases made of given criteria" filteredValue="#{maaif.userpurchaseList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="budgTable2" fileName="PURCHASES" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="budgTable2" fileName="PURCHASES"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="budgTable2" fileName="PURCHASES" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="budgTable2" fileName="PURCHASES" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{userpurchase.agrodealerproductid.productname}" sortBy="#{userpurchase.agrodealerproductid.productname}" headerText="Product">
+                                            <p:outputLabel value="#{userpurchase.agrodealerproductid.productname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{userpurchase.price}" sortBy="#{userpurchase.price}" headerText="price">
+                                            <p:outputLabel value="#{userpurchase.price}" />
+                                        </p:column>
+                                        <p:column filterBy="#{userpurchase.paymentmode}" sortBy="#{userpurchase.paymentmode}" headerText="payment mode">
+                                            <p:outputLabel value="#{userpurchase.paymentmode}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+
+
+                            <p:tab title="FARMERS">
+                                <h:form>
+                                    <p:dataTable var="users" value="#{maaif.farmersList}" widgetVar="budgTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="budgTable"
+                                                 emptyMessage="No farmers found with given criteria" filteredValue="#{maaif.farmersList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="budgTable" fileName="FARMERS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="budgTable" fileName="FARMERS"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="budgTable" fileName="FARMERS" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="budgTable" fileName="FARMERS" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{users.name}" sortBy="#{users.name}" headerText="Name">
+                                            <p:outputLabel value="#{users.name}" />
+                                        </p:column>
+                                        <p:column filterBy="#{users.email}" sortBy="#{users.email}" headerText="Email Address">
+                                            <p:outputLabel value="#{users.email}" />
+                                        </p:column>
+                                        <p:column filterBy="#{users.createdAt}" sortBy="#{users.createdAt}" headerText="Date registered">
+                                            <p:outputLabel value="#{users.createdAt}" />
+                                        </p:column>
+                                        <p:column filterBy="#{users.phone}" sortBy="#{users.phone}" headerText="phone">
+                                            <p:outputLabel value="#{users.phone}" />
+                                        </p:column>
+                                        <p:column filterBy="#{users.region}" sortBy="#{users.region}" headerText="Region">
+                                            <p:outputLabel value="#{users.region}" />
+                                        </p:column>
+                                        <p:column filterBy="#{users.username}" sortBy="#{users.username}" headerText="username">
+                                            <p:outputLabel value="#{users.username}" />
+                                        </p:column>
+                                        <p:column  sortBy="#{users.groupID.name}"  filterBy="#{users.groupID.name}" headerText ="Group">
+                                            <p:outputLabel value="#{users.groupID.name}"  style="display: block; color:GREEN" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="GOVERNMENT PAYMENTS">
+                                <h:form>
+                                    <p:dataTable var="govtpayments" value="#{maaif.govtpaymentsList}" widgetVar="expTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size: xx-small; "
+                                                 id="expTable"
+                                                 emptyMessage="No payment details found with given criteria" filteredValue="#{maaif.govtpaymentsList}">
+                                        <f:facet name="header">
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                                <p:dataExporter type="xls" target="expTable" fileName="payments" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/pdf.png" width="32" height="32"/>
+                                                <p:dataExporter type="pdf" target="expTable" fileName="payments"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/csv.png" width="32" height="32"/>
+                                                <p:dataExporter type="csv" target="expTable" fileName="payments" />
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <h:graphicImage value="/images/xml.png" width="32" height="32"/>
+                                                <p:dataExporter type="xml" target="expTable" fileName="payments" />
+                                            </h:commandLink>
+                                        </f:facet>
+                                        <p:column filterBy="#{govtpayments.amount}" sortBy="#{govtpayments.amount}" headerText="amount">
+                                            <p:outputLabel value="#{govtpayments.amount}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.payee}" sortBy="#{govtpayments.payee}" headerText="payed to">
+                                            <p:outputLabel value="#{govtpayments.payee}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.createdon}" sortBy="#{govtpayments.createdon}" headerText="created on">
+                                            <p:outputLabel value="#{govtpayments.createdon}" />
+                                        </p:column>
+                                        <p:column filterBy="#{govtpayments.statusID.name}" sortBy="#{govtpayments.statusID.name}" headerText="Status">
+                                            <p:outputLabel value="#{govtpayments.statusID.name}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+
+                    </h:panelGrid>
+                </p:panel>
+
+
+
+            </div>
+        </div>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger">
+            <p:commandButton value="Yes" type="button" styleClass="btn-primary ui-confirmdialog-yes"
+                             icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="btn-danger ui-confirmdialog-no"
+                             icon="fa fa-close"/>
+        </p:confirmDialog>
+
+        <script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+                /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                 for (let registration of registrations) {
+                 registration.unregister()
+                 }
+                 });*/
+
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+    </ui:define>
+
+
+</ui:composition>

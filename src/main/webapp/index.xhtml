@@ -1,29 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="#{layoutMB.layout}">
-
+                template="#{layoutMB.indexLayout}">
     <ui:define name="head-end">
-        <ui:param name="renderBreadCrumb" value="false"/>
     </ui:define>
-
     <ui:define name="title">
-        <h2 class="align-center">
-            Welcome to the <span class="text-aqua"> <i><a href="https://github.com/adminfaces/admin-starter"
-                                                          target="_blank"
-                                                          style="text-transform: none;text-decoration: none"> AdminFaces Starter</a></i></span> Project!
-            <br/>
-            <small>Integrating <p:link value="Primefaces" href="http://primefaces.org"/>, <p:link value="Bootstrap"
-                                                                                                  href="http://getbootstrap.com/"/> and
-                <p:link value="Admin LTE" href="https://almsaeedstudio.com/themes/AdminLTE/index2.html/"/> into your
-                <p:link value="JSF" href="https://javaserverfaces.java.net/"/> application.
-            </small>
-        </h2>
-
     </ui:define>
-
     <ui:define name="body">
+        <div class="box box-primary">
+            <div class="box-header">
+                <p:separator/>
+                <p:panel id="spanel"   style="background: transparent;  position: relative; border: none">
+                    <div class="box box-solid box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Keirere</h3>
+
+                            <div class="box-tools pull-right">
+                            </div>
+                        </div>
+                        <div class="box box-primary" >
+                            <div class="box-body">
+                                <h4>At Keirere Green Africa Agency, we are committed to improving agriculture and sustaining communities and to improve on their farming techniques</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <h:panelGrid columns="1">
+                        <p:growl id="msgs1" sticky="true" showDetail="true" />
+                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"     style="background: transparent; width: 100%; height: 100%; border: none" >  
+                            <p:tab  title="VIEW PROUCTS AND PURCHASE" >
+                                <h:form id="agrodealerProductdAnimalsForm" style="width: auto; border: none" >
+                                    <p:dataGrid var="car" value="#{maaif.agrodealerProductList}" columns="2"  style="border: none;  padding:1em;" layout="grid"
+                                                rows="12" paginator="true" id="cars"
+                                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                rowsPerPageTemplate="6,12,16">
+                                        <f:facet name="header">
+                                            Agricultural products available for sale
+                                        </f:facet>
+                                        <p:panel  style="border: none; width: fit-content">
+                                            <h:panelGrid columns="1" style="width:100%; border: none">
+                                                <div><h:outputText value="#{car.price}" style="color: chocolate; font-size: xx-large"><f:convertNumber currencyCode="UGX"  type="currency" /></h:outputText></div>
+                                                <fieldset>
+                                                    <legend style="border: 1"><h:outputText  value="#{car.productname}" style="color: chocolate; font-size: 24px"/></legend>
+                                                    <hr/>
+                                                    <h:panelGrid columns="1">
+                                                        <h:graphicImage width="180px" height="180px" style="border-radius: 20%;" url="#{car.photourl}"></h:graphicImage>
+                                                    </h:panelGrid>
+                                                </fieldset>
+                                                <h:outputText value="#{car.description}" style="color: green"/>
+                                                <br/>
+                                                <h:panelGrid columns="3">
+                                                    <p:outputLabel value="SELECT QUANTITY  ." style="font-family: sans-serif;  font-weight: bold"/>
+                                                    <p:spinner  value="#{maaif.quantity}"><p:ajax event="keyup" /></p:spinner>
+                                                    <p:outputLabel value="#{car.agrodealerproductunit.unitname}" style="font-family: sans-serif;  font-weight: bold"/>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
+                                                    <p:commandButton   styleClass="btn-primary" immediate="true"   icon="fa fa-shopping-cart"  action="#{maaif.loginPage}"  value="purchase">
+                                                        <f:setPropertyActionListener  value="#{car}"  target="#{maaif.agrodealerProduct}" />
+                                                    </p:commandButton>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </p:dataGrid>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                    </h:panelGrid>
+                </p:panel>
+            </div>
+        </div>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger">
+            <p:commandButton value="Yes" type="button" styleClass="btn-primary ui-confirmdialog-yes"
+                             icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="btn-danger ui-confirmdialog-no"
+                             icon="fa fa-close"/>
+        </p:confirmDialog>
         <script type="text/javascript">
             /*if ('serviceWorker' in navigator) {
              navigator.serviceWorker.register('sw.js');
@@ -31,13 +85,13 @@
 
 
             if ('serviceWorker' in navigator) {
-              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                    for (let registration of registrations) {
-                        registration.unregister()
-                    }
-                });*/
+                /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                 for (let registration of registrations) {
+                 registration.unregister()
+                 }
+                 });*/
 
-                 window.addEventListener('load', function () {
+                window.addEventListener('load', function () {
                     navigator.serviceWorker.register('sw.js').then(function (registration) {
                         // Registration was successful
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);

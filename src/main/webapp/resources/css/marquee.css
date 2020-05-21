@@ -1,0 +1,38 @@
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    min-height: 2000px;
+    font-family: sans-serif;
+}
+img {
+    display: block;
+    max-width: 100%;
+}
+.background {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+h1 {
+    text-align: center;
+    color: white;
+    margin-top: 24vw;
+    font-size: 5vw;
+}
+.blur {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+}

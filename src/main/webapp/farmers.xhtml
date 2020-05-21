@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="true"/>
+    </ui:define>
+
+    <ui:define name="title">
+        <ui:include src="meters.xhtml"/>
+    </ui:define>
+    <ui:define name="body">
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <div id="main-buttons" class="hidden-sm hidden-xs">
+                    <h:form id="editForm1">
+                        <p:commandButton action="car-form?faces-redirect=true" icon="fa fa-plus"
+                                         value="New" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Delete Selected" icon="fa fa-trash" styleClass="btn-danger"
+                                         process="@this" update="@form"
+                                         >
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Search" update="@(.ui-dialog)" styleClass="btn-info"
+                                         oncomplete="PF('searchDialog').show()" icon="fa fa-search"/>
+
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form"
+
+                                         icon="fa fa-refresh"/>
+                    </h:form>
+                </div>
+                <h:form id="ButtonsForm">
+                    <p:splitButton value="New" action="car-form?faces-redirect=true"
+                                   icon="fa fa-plus"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Delete Selected" 
+                                    process="@this" update="@form" 
+                                    icon="fa fa-trash">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:menuitem>
+                        <p:menuitem value="Search" update="@(.ui-dialog)"
+                                    oncomplete="PF('searchDialog').show()"
+                                    icon="fa fa-search"/>
+                        <p:menuitem value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form"
+                                    icon="fa fa-refresh"/>
+                    </p:splitButton>
+                </h:form>
+                <p:separator/>
+                <p:panel id="spanel"   style="margin: 4em; background: transparent;  position: relative; border: 0">
+                    <h:panelGrid columns="1">
+
+                        <h:form>
+                            <p:fileUpload fileUploadListener="#{maaif.uploadFarmers}" mode="advanced" dragDropSupport="false" label="Upload a farmerss list CSV File"
+                                          multiple="true" update="messages" sizeLimit="100000"  allowTypes="/(\.|\/)(gif|jpe?g|txt)$/" />
+                            <p:growl id="messages" showDetail="true" />
+                        </h:form>
+                        <p:growl id="msgs1" sticky="true" showDetail="true" />
+                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"   style="background: transparent; width: 100%; height: 100%; border: 0" id="farmerssTabView"> 
+                            <p:tab title="MANAGE FARMERS" >
+                                <h:form id="farmersForm" style="width: auto" > 
+                                    <h:panelGrid columns="1" >
+                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8"
+                                                     layout="grid" styleClass="ui-fluid card">
+                                            <p:outputLabel value="Name"/>
+                                            <p:inputText    value="#{maaif.farmers.name}" />
+                                            <p:outputLabel value="Mobile phone"/>
+                                            <p:inputText      value="#{maaif.farmers.phone}" />
+                                            <p:outputLabel value="Identification number"/>
+                                            <p:inputText      value="#{maaif.farmers.staffID}" />
+                                            <p:outputLabel value="Username"/>
+                                            <p:inputText      value="#{maaif.farmers.username}" />
+                                            <p:outputLabel value="Gender"/>
+                                            <p:selectOneRadio   value="#{maaif.farmers.gender}" >
+                                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                <f:selectItem itemLabel="Female" itemValue="Female" />
+                                            </p:selectOneRadio>
+                                            <p:outputLabel value="Disability/Abilty"/>
+                                            <p:selectOneRadio   value="#{maaif.farmers.disability}" >
+                                                <f:selectItem itemLabel="Disabled" itemValue="Disabled" />
+                                                <f:selectItem itemLabel="Not disabled" itemValue="Not Disabled" />
+                                            </p:selectOneRadio>
+                                            <p:outputLabel value="Region"/>
+                                            <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.region}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{maaif.regionsList}"  var="actorID" itemValue="#{actorID.idregions}" itemLabel="#{actorID.province}, #{actorID.county}, #{actorID.constituency}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Farmer Group"/>
+                                            <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.farmergroup}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{maaif.farmergroupsList}"  var="actorID" itemValue="#{actorID.name}" itemLabel="#{actorID.name}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Crops grown"/>
+                                            <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.cropgrown}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{maaif.cropproductList}"  var="actorID" itemValue="#{actorID.name}" itemLabel="#{actorID.name}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Email address"/>
+                                            <p:inputText    type="email"  value="#{maaif.farmers.email}" />
+                                            <p:messages for="farmersForm"  showDetail="true" />
+                                        </p:panelGrid>
+                                        <h:panelGrid columns="8">
+                                            <p:commandButton value="SUBMIT"  icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.registerFarmer}" />
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="UPLOADED FARMER">
+                                <h:form id="createdUsers" style="width: auto" >
+                                    <p:dataTable var="farmerss" value="#{maaif.farmersList}" widgetVar="farmerssTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size:11px"
+                                                 id="farmerssTable"
+                                                 emptyMessage="No farmerss found with given criteria" filteredValue="#{maaif.farmersList}">
+                                        <p:column filterBy="#{farmerss.name}" sortBy="#{farmerss.name}" headerText="Name">
+                                            <p:outputLabel value="#{farmerss.name}" />
+                                        </p:column>
+                                        <p:column filterBy="#{farmerss.email}" sortBy="#{farmerss.email}" headerText="Email Address">
+                                            <p:outputLabel value="#{farmerss.email}" />
+                                        </p:column>
+                                        <p:column filterBy="#{farmerss.phone}" sortBy="#{farmerss.phone}" headerText="phone">
+                                            <p:outputLabel value="#{farmerss.phone}" />
+                                        </p:column>
+                                        <p:column  sortBy="#{farmerss.groupID.name}"  filterBy="#{farmerss.groupID.name}" headerText ="Group">
+                                            <p:outputLabel value="#{farmerss.groupID.name}"  style="display: block; color:GREEN" />
+                                        </p:column>
+                                        <p:column style="width:4%">
+                                            <p:commandLink process="@this" styleClass="si-icon-16x16 si-icon-edit" update=":editForm:farmersDetail" oncomplete="PF('farmersDialog').show()"  value="DETAILS"   title="Edit  #{farmerss.name}'s DETAILS">                                                  
+                                                <f:setPropertyActionListener value="#{farmerss}"   target="#{maaif.farmers}" />  
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                        <h:form id="editForm">
+                            <p:dialog header="USER" dynamic="true" widgetVar="farmersDialog" showEffect="clip"   hideEffect="explode" resizable="false">
+                                <p:outputPanel id="farmersDetail" style="text-align:center;">  
+                                    <h:form>
+                                        <h:panelGrid columns="1">
+                                            <h:panelGrid columns="4">
+                                                <p:outputLabel value="Name"/>
+                                                <p:inputText    value="#{maaif.farmers.name}" />
+                                                <p:outputLabel value="Mobile phone"/>
+                                                <p:inputText      value="#{maaif.farmers.phone}" />
+                                                <p:outputLabel value="Identification number"/>
+                                                <p:inputText      value="#{maaif.farmers.staffID}" />
+                                                <p:outputLabel value="Group ID"/>
+                                                <p:inputText      value="#{maaif.farmers.staffID}" />
+                                                <p:outputLabel value="Gender"/>
+                                                <p:selectOneRadio   value="#{maaif.farmers.gender}" >
+                                                    <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                    <f:selectItem itemLabel="Female" itemValue="Female" />
+                                                </p:selectOneRadio>
+                                                <p:outputLabel value="Disability/Abilty"/>
+                                                <p:selectOneRadio   value="#{maaif.farmers.disability}" >
+                                                    <f:selectItem itemLabel="Disabled" itemValue="Disabled" />
+                                                    <f:selectItem itemLabel="Not disabled" itemValue="Not Disabled" />
+                                                </p:selectOneRadio>
+                                                <p:outputLabel value="Region"/>
+                                                <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.region}"  style="width: 200px" >
+                                                    <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{maaif.regionsList}"  var="actorID" itemValue="#{actorID.idregions}" itemLabel="#{actorID.province}, #{actorID.county}, #{actorID.constituency}" />
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Farmer Group"/>
+                                                <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.farmergroup}"  style="width: 200px" >
+                                                    <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{maaif.farmergroupsList}"  var="actorID" itemValue="#{actorID.name}" itemLabel="#{actorID.name}" />
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Crops grown"/>
+                                                <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.farmers.cropgrown}"  style="width: 200px" >
+                                                    <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{maaif.cropproductList}"  var="actorID" itemValue="#{actorID.name}" itemLabel="#{actorID.name}" />
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Username"/>
+                                                <p:inputText      value="#{maaif.farmers.username}" />
+                                                <p:outputLabel value="Email address"/>
+                                                <p:inputText      value="#{maaif.farmers.email}" />
+                                                <p:messages for="farmersForm"  showDetail="true" />
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="8">
+                                                <p:commandButton value="SUBMIT"  icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.updateUser}" />
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </p:outputPanel>
+                            </p:dialog>
+                        </h:form>
+                    </h:panelGrid>
+                </p:panel>
+            </div>
+        </div>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger">
+            <p:commandButton value="Yes" type="button" styleClass="btn-primary ui-confirmdialog-yes"
+                             icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="btn-danger ui-confirmdialog-no"
+                             icon="fa fa-close"/>
+        </p:confirmDialog>
+
+        <script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+                /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                 for (let registration of registrations) {
+                 registration.unregister()
+                 }
+                 });*/
+
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+    </ui:define>
+
+
+</ui:composition>

@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class LayoutMB implements Serializable {
 
     private String layout;
+    private String indexLayout;
 
     @PostConstruct
     public void init() {
@@ -29,5 +30,21 @@ public class LayoutMB implements Serializable {
 
     public void setDefaultLayout() {
         layout = "/WEB-INF/templates/template.xhtml";
+    }
+
+    /**
+     * @return the indexLayout
+     */
+    public String getIndexLayout() {
+        indexLayout = "/WEB-INF/templates/template-index.xhtml";
+        return indexLayout;
+    }
+
+    /**
+     * @param indexLayout the indexLayout to set
+     */
+    public void setIndexLayout(String indexLayout) {
+
+        this.indexLayout = indexLayout;
     }
 }

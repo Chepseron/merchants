@@ -14,6 +14,7 @@
         }
 
     </style>
+    
     <ul class="nav navbar-nav">
         <li>
             <h:form prependId="false">
@@ -27,16 +28,16 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <pe:gravatar id="userImage"
                              value="nonexisting"/>
-                <span class="hidden-xs">#{logonMB.currentUser}</span>
+                <span class="hidden-xs">#{maaif.user.name}</span>
             </a>
             <ul class="dropdown-menu">
                 <li class="user-header">
                     <div class="hidden-xs">
                         <pe:gravatar style="border-radius: 50%"
-                                     value="rmpestano@gmail.com"/>
+                                     value="#{maaif.user.email}"/>
                     </div>
                     <p>
-                        #{logonMB.currentUser}
+                        #{maaif.user.name}
                         <small>Subtitle</small>
                     </p>
                 </li>
@@ -46,7 +47,7 @@
                             <p:commandLink styleClass="btn btn-danger" value="Change password"/>
                         </div>
                         <div class="pull-right">
-                            <p:commandLink id="logout" action="#{logoutMB.doLogout}" title="Logoff">
+                            <p:commandLink id="logout" action="#{maaif.logout}" title="Logoff">
                                 <i class="fa fa-sign-out fa-2x"></i>
                             </p:commandLink>
                         </div>

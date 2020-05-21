@@ -3,23 +3,217 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-     <ul class="sidebar-menu">
+    <ul class="sidebar-menu">
         <li>
-            <p:link href="/index.xhtml" onclick="clearBreadCrumbs()">
-                <i class="fa fa-home"></i>
+            <li>
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="images/Amon Sabul.jpg" class="img-circle" alt="User Image"/>
+                    </div>
+                    <div class="pull-left info">
+                        <p>#{maaif.user.name}</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- search form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </li>
+        </li>
+        <li>
+            <p:link href="/report.xhtml" rendered="#{maaif.UBA}">
+                <i class="fa  fa-bank"></i>
                 <span>Home</span>
             </p:link>
         </li>
-        <li class="header">
-            General
+        <li>
+            <p:link href="/welcome.xhtml"  rendered="#{maaif.farmer}">
+                <i class="fa fa-bank"></i>
+                <span>Home</span>
+            </p:link>
         </li>
         <li>
-            <p:link href="/car-list.xhtml">
-                <i class="fa fa-car"></i>
-                <span>Cars</span>
+            <p:link href="/wallet.xhtml"  rendered="#{maaif.farmer}">
+                <i class="fa fa-google-wallet"></i>
+                <span>My wallet</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/userpurchase.xhtml" rendered="#{maaif.farmer}">
+                <i class="fa fa-buysellads"></i>
+                <span>Make a purchase</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/cartList.xhtml" rendered="#{maaif.admin}">
+                <i class="fa  fa-users"></i>
+                <span>Check purchases</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/farmergroup.xhtml" rendered="#{maaif.UBA}">
+                <i class="fa  fa-users"></i>
+                <span>Manage farmer group</span>
             </p:link>
         </li>
 
-    </ul>
+        <li>
+            <p:link href="/agrodealers.xhtml" rendered="#{maaif.UBA}">
+                <i class="fa  fa-users"></i>
+                <span>Manage Agro Dealers</span>
+            </p:link>
+        </li>
 
+        <li>
+            <p:link href="/farmergroup.xhtml" rendered="#{maaif.admin}">
+                <i class="fa  fa-users"></i>
+                <span>Manage Farmer group</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/agrodealersproducts.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-shopping-cart"></i>
+                <span>Products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/distributionchannels.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-sitemap"></i>
+                <span>My distribution stores</span>
+            </p:link>
+        </li>
+
+        <li>
+            <p:link href="/orders.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-truck"></i>
+                <span>Send purchases to stores</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/purchases.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-dollar"></i>
+                <span>Acknowledge products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/purchases.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-dollar"></i>
+                <span>My Payments(From customers)</span>
+            </p:link>
+        </li>
+
+        <li>
+            <p:link href="/productUnits.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-flask"></i>
+                <span>Product Unit</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/regions.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-map-marker"></i>
+                <span>Regions</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/banks.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-bank"></i>
+                <span>Manage Banks</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/agrodealersproducttypes.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-bank"></i>
+                <span>Manage product types</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/channels.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-sitemap"></i>
+                <span>Supervise distribution channels</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/farmers.xhtml" rendered="#{maaif.UBA}">
+                <i class="fa fa-female"></i>
+                <span>Manage farmers</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/validateproducts.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-cart-plus"></i>
+                <span>Manage Products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/govtpayments.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-money"></i>
+                <span>Manage Payments</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/evouchers.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage e-vouchers</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/report.xhtml" rendered="#{maaif.government}">
+                <i class="fa  fa-bar-chart"></i>
+                <span>System Reports<br/>(quarterly/yearly/half yearly)</span>
+            </p:link>
+        </li>
+
+        <li>
+            <p:link href="/users.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-users"></i>
+                <span>System Users</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/status.xhtml" rendered="#{maaif.admin}">
+                <i class="fa  fa-hourglass-2"></i>
+                <span>Status</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/cropproducts.xhtml" rendered="#{maaif.admin}">
+                <i class="fa  fa-hourglass-2"></i>
+                <span>Crop Products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/groups.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-object-ungroup"></i>
+                <span>User Groups</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/audit.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-object-ungroup"></i>
+                <span>System audit trails</span>
+            </p:link>
+        </li>
+
+        <li>
+            <p:link href="/report.xhtml" rendered="#{maaif.UBA}">
+                <i class="fa  fa-users"></i>
+                <span>Reports</span>
+            </p:link>
+        </li>
+
+
+    </ul>
+    <script type="text/javascript">
+        $('.list > li a').click(function () {
+            $(this).parent().find('ul').toggle();
+        });
+    </script>
 </ui:composition>

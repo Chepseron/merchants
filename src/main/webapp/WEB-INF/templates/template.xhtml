@@ -6,8 +6,9 @@
                 template="/admin.xhtml">
 
     <ui:define name="head">
-        <title>Admin Starter</title>
+        <title>Keirere</title>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>
+        <link rel="stylesheet" type="text/css" href="/resources/css/marquee.css"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-16x16.png']}" sizes="16x16"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-96x96.png']}" sizes="96x96"/>
@@ -19,36 +20,36 @@
     </ui:define>
 
     <ui:define name="logo">
-        Admin Starter
+        Keirere
     </ui:define>
 
     <ui:define name="logo-mini">
-        Admin
+        Keirere
     </ui:define>
 
-     <ui:define name="menu">
-         <ui:include src="/includes/menu.xhtml"/>
-     </ui:define>
+    <ui:define name="menu">
+        <ui:include src="/includes/menu.xhtml"/>
+    </ui:define>
 
     <ui:define name="top-menu">
         <ui:include src="/includes/top-bar.xhtml"/>
     </ui:define>
-    
+
 
 
     <ui:define name="footer">
-          <a target="_blank"
+        <a target="_blank"
            href="https://github.com/adminfaces/">
-            Copyright (C) 2017 - AdminFaces
+            Copyright (C) 2018 - Keirere
         </a>
 
-        <div class="pull-right hidden-xs" style="color: gray">
-            <i>#{msg['starter.version']}</i>
+        <div class="pull-right hidden-xs" style="color: chocolate">
+            <i>http://www.agriculture.go.ug tel:0414320004, Address: Berkely Ln, Entebbe</i>
         </div>
 
         <script type="text/javascript">
-            if(isMobile()) {
-                $('a.ui-link').click(function() {
+            if (isMobile()) {
+                $('a.ui-link').click(function () {
                     $(this).prop('disabled', true);
                     showBar();
                 });

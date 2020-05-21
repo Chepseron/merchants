@@ -3,36 +3,113 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-     <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav">
         <li>
-            <p:link href="/index.xhtml" onclick="clearBreadCrumbs()">
-                <i class="fa fa-home"></i>
-                <span>Home</span>
+            <p:link href="/wallet.xhtml"  rendered="#{maaif.farmer}">
+                <i class="fa fa-car"></i>
+                <span>My wallet</span>
             </p:link>
         </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cars <span
-                    class="caret"></span>
-                <i class="fa fa-car"></i>
-            </a>
+        <li>
+            <p:link href="/userpurchase.xhtml" rendered="#{maaif.farmer}">
+                <i class="fa fa-dashboard"></i>
+                <span>Make a purchase</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/agrodealers.xhtml" rendered="#{maaif.government}">
+                <i class="fa  fa-money"></i>
+                <span>Manage Agro Dealers</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/agrodealersproducts.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-dollar"></i>
+                <span>Products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/purchases.xhtml" rendered="#{maaif.agrodealer}">
+                <i class="fa  fa-dollar"></i>
+                <span>My Payments(From customers)</span>
+            </p:link>
+        </li>
 
-            <ul class="dropdown-menu" role="menu">
-                <li>
-                    <p:link href="/car-list.xhtml">
-                        <span>List</span>
-                        <i class="fa fa-th-list"></i>
-                    </p:link>
-                </li>
-                <li>
-                    <p:link href="/car-list.xhtml">
-                        <span>New</span>
-                        <i class="fa fa-plus-circle"></i>
-                    </p:link>
-                </li>
 
 
-            </ul>
+        <li>
+            <p:link href="/productUnits.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-info-circle"></i>
+                <span>Product Unit</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/regions.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-info-circle"></i>
+                <span>Regions</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/banks.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage Banks</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/farmers.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage farmers</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/validateproducts.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage Products</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/govtpayments.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage Payments</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/evouchers.xhtml" rendered="#{maaif.government}">
+                <i class="fa fa-info-circle"></i>
+                <span>Manage e-vouchers</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/report.xhtml" rendered="#{maaif.government}">
+                <i class="fa  fa-bar-chart"></i>
+                <span>System Reports<br/>(quarterly/yearly/half yearly)</span>
+            </p:link>
+        </li>
 
+        <li>
+            <p:link href="/users.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-user-md"></i>
+                <span>System Users</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/status.xhtml" rendered="#{maaif.admin}">
+                <i class="fa  fa-hourglass-2"></i>
+                <span>Status</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link href="/groups.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-object-ungroup"></i>
+                <span>User Groups</span>
+            </p:link>
+        </li>
+
+        <li>
+            <p:link href="/audit.xhtml" rendered="#{maaif.admin}">
+                <i class="fa fa-object-ungroup"></i>
+                <span>System audit trails</span>
+            </p:link>
         </li>
     </ul>
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="true"/>
+    </ui:define>
+    <ui:define name="title">
+          <ui:include src="meters.xhtml"/>
+    </ui:define>
+    <ui:define name="body">
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+               
+                <p:panel id="spanel">
+                    <h:panelGrid columns="1">
+                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"    style="background: transparent; width: inherit; height: 100%; border: 0" >  
+                            <p:tab title="CREATED PRODUCTS">
+                                <h:form id="agrodealerProductdAnimalsForm" style="width: auto" >
+                                    <p:dataTable var="agrodealerProduct" value="#{maaif.agrodealerProductList}" widgetVar="usersTable"
+                                                 paginator="true" rows="10"
+                                                 style="background: transparent; font-size:11px"
+                                                 id="agrodealerProductsTable"
+                                                 emptyMessage="No agrodealerProduct found with given criteria" filteredValue="#{maaif.agrodealerProductList}">
+                                        <p:column filterBy="#{agrodealerProduct.productname}" sortBy="#{agrodealerProduct.productname}" headerText="productname">
+                                            <p:outputLabel value="#{agrodealerProduct.productname}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.dealerid.companyname}" sortBy="#{agrodealerProduct.dealerid.companyname}" headerText="Dealer">
+                                            <p:outputLabel value="#{agrodealerProduct.dealerid.companyname}" />
+                                        </p:column>
+                                     
+                                        <p:column filterBy="#{agrodealerProduct.price}" sortBy="#{agrodealerProduct.price}" headerText="Price">
+                                            <p:outputLabel value="#{agrodealerProduct.price}" />
+                                        </p:column>
+                                        <p:column filterBy="#{agrodealerProduct.description}" sortBy="#{agrodealerProduct.description}" headerText="Description">
+                                            <p:outputLabel value="#{agrodealerProduct.description}" />
+                                        </p:column>
+                                        <p:column style="width:4%">
+                                            <p:commandLink process="@this" styleClass="si-icon-16x16 si-icon-edit" update=":editForm:agrodealerProductDetail" oncomplete="PF('agrodealerProductDialog').show()"  value="DETAILS"   title="Edit  #{agrodealerProduct.productname}'s DETAILS">                                                  
+                                                <f:setPropertyActionListener value="#{agrodealerProduct}"   target="#{maaif.agrodealerProduct}" />  
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                        <h:form id="editForm">
+                            <p:dialog header="Product" dynamic="true" widgetVar="agrodealerProductDialog" showEffect="clip"  hideEffect="explode" resizable="false">
+                                <p:outputPanel id="agrodealerProductDetail" style="text-align:center;">  
+                                    <h:form> 
+                                        <h:panelGrid columns="1" >
+                                            <p:panelGrid columns="4">
+                                                <p:outputLabel style="color: chocolate" value="Quantity Present"/>
+                                                <p:outputLabel      value="#{maaif.agrodealerProduct.quantitypresent}"/>
+                                                <p:outputLabel style="color: chocolate" value="Name"/>
+                                                <p:outputLabel      value="#{maaif.agrodealerProduct.productname}"/>
+                                                <p:outputLabel style="color: chocolate" value="Unit"/>
+                                                <p:outputLabel     value="#{maaif.agrodealerProduct.agrodealerproductunit.unitname}" />
+                                                <p:outputLabel style="color: chocolate" value="Dealer"/>
+                                                <p:outputLabel       value="#{maaif.agrodealerProduct.dealerid.companyname}"/>
+                                                <p:outputLabel style="color: chocolate" value="Price"/>
+                                                <p:outputLabel      value="#{maaif.agrodealerProduct.price}"/>
+                                                <p:outputLabel style="color: chocolate" value="Description"/>
+                                                <p:outputLabel      value="#{maaif.agrodealerProduct.description}"/>
+                                                <p:messages for="userForm"  showDetail="true" />
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2">
+                                                 <p:outputLabel style="color: chocolate" value="Photo"/>
+                                                <h:graphicImage width="140px" height="100px" url="#{maaif.agrodealerProduct.photourl}"></h:graphicImage>
+                                            </p:panelGrid>
+                                            <h:panelGrid columns="8">
+                                                <p:commandButton value="VALIDATE WITH UNBS"  ajax="false" icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.validateProduct()}" />
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </p:outputPanel>
+                            </p:dialog>
+                        </h:form>
+                    </h:panelGrid>
+                </p:panel>
+            </div>
+        </div>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger">
+            <p:commandButton value="Yes" type="button" styleClass="btn-primary ui-confirmdialog-yes"
+                             icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="btn-danger ui-confirmdialog-no"
+                             icon="fa fa-close"/>
+        </p:confirmDialog>
+
+        <script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+                /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                 for (let registration of registrations) {
+                 registration.unregister()
+                 }
+                 });*/
+
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+    </ui:define>
+
+
+</ui:composition>
