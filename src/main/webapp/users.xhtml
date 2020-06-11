@@ -9,12 +9,9 @@
     <ui:define name="head-end">
         <ui:param name="renderBreadCrumb" value="true"/>
     </ui:define>
-
     <ui:define name="title">
-
     </ui:define>
     <ui:define name="body">
-
         <div class="box box-primary">
             <div class="box-header with-border">
                 <div id="main-buttons" class="hidden-sm hidden-xs">
@@ -56,64 +53,86 @@
                     <h:panelGrid columns="1">
                         <p:growl id="msgs1" sticky="true" showDetail="true" />
                         <p:tabView  styleClass="si-icon-16x16 si-icon-edit"   style="background: transparent; width: 100%; height: 100%; border: 0" id="usersTabView"> 
-                            <p:tab title="MANAGE SYSTEM USERS/FARMERS" >
+                            <p:tab title="MANAGE SYSTEM USERS" >
                                 <h:form id="userForm" style="width: auto" > 
                                     <h:panelGrid columns="1" >
                                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8"
                                                      layout="grid" styleClass="ui-fluid card">
-                                            <p:outputLabel value="Name"/>
-                                            <p:inputText    value="#{maaif.users.name}" />
-                                            <p:outputLabel value="Mobile phone"/>
-                                            <p:inputText      value="#{maaif.users.phone}" />
-                                            <p:outputLabel value="Status"/>
-                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{maaif.users.groupID}"  style="width: 200px" >
+                                            <p:outputLabel value="Branch"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.branchID}"  style="width: 200px" >
                                                 <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{maaif.group1List}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                                <f:selectItems value="#{Merchants.branchList}"  var="group" itemValue="#{group}" itemLabel="#{group.branchName}" />
                                             </p:selectOneMenu>
-                                            <p:outputLabel value="Gender"/>
-                                            <p:selectOneRadio id="console"  value="#{maaif.users.gender}" >
-                                                <f:selectItem itemLabel="Male" itemValue="Male" />
-                                                <f:selectItem itemLabel="Female" itemValue="Female" />
-                                            </p:selectOneRadio>
-                                            <p:outputLabel value="Username"/>
-                                            <p:inputText      value="#{maaif.users.username}" />
-                                            <p:outputLabel value="Password"/>
-                                            <p:inputText      value="#{maaif.users.pword}" />
-                                            <p:outputLabel value="Email address"/>
-                                            <p:inputText    type="email"  value="#{maaif.users.email}" />
+                                            <p:outputLabel value="Status"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.status}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.statusList}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Country"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.country}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.branchList}"  var="group" itemValue="#{group}" itemLabel="#{group.country}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="First Name"/>
+                                            <p:inputText    value="#{Merchants.user.firstName}" />
+                                            <p:outputLabel value="Middle Name"/>
+                                            <p:inputText    value="#{Merchants.user.middleName}" />
+                                            <p:outputLabel value="Last Name"/>
+                                            <p:inputText    value="#{Merchants.user.lastName}" />
+                                            <p:outputLabel value="User Name"/>
+                                            <p:inputText    value="#{Merchants.user.userName}" />
+                                            <p:outputLabel value="Phone number"/>
+                                            <p:inputText    value="#{Merchants.user.phoneNumber}" />
+                                            <p:outputLabel value="Confirmed Phone Number"/>
+                                            <p:inputText    value="#{Merchants.user.phoneNumberConfirmed}" />
+                                            <p:outputLabel value="Email"/>
+                                            <p:inputText    value="#{Merchants.user.email}" />
+                                            <p:outputLabel value="Confirmed Email"/>
+                                            <p:inputText    value="#{Merchants.user.emailConfirmed}" />
+                                            <p:outputLabel value="Merchant ID"/>
+                                            <p:inputText    value="#{Merchants.user.merchantID}" />
+                                            <p:outputLabel value="Merchant ID"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.merchantID}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.merchantsList}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                            </p:selectOneMenu>
+
                                             <p:messages for="userForm"  showDetail="true" />
                                         </p:panelGrid>
                                         <h:panelGrid columns="8">
-                                            <p:commandButton value="SUBMIT"  icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.createUser()}" />
+                                            <p:commandButton value="SUBMIT"  icon="fa fa-plus" styleClass="btn-primary"  action="#{Merchants.createUser()}" />
                                         </h:panelGrid>
                                     </h:panelGrid>
                                 </h:form>
                             </p:tab>
                             <p:tab title="CREATED USERS">
                                 <h:form id="createdUsers" style="width: auto" >
-                                    <p:dataTable var="users" value="#{maaif.userList}" widgetVar="usersTable"
+                                    <p:dataTable var="users" value="#{Merchants.userList}" widgetVar="usersTable"
                                                  paginator="true" rows="10"
                                                  style="background: transparent; font-size:11px"
                                                  id="usersTable"
-                                                 emptyMessage="No users found with given criteria" filteredValue="#{maaif.userList}">
-                                        <p:column filterBy="#{users.name}" sortBy="#{users.name}" headerText="Name">
-                                            <p:outputLabel value="#{users.name}" />
+                                                 emptyMessage="No users found with given criteria" filteredValue="#{Merchants.userList}">
+                                        <p:column filterBy="#{users.firstName}" sortBy="#{users.firstName}" headerText="firstName">
+                                            <p:outputLabel value="#{users.firstName}" />
                                         </p:column>
-                                        <p:column filterBy="#{users.email}" sortBy="#{users.email}" headerText="Email Address">
-                                            <p:outputLabel value="#{users.email}" />
+                                        <p:column filterBy="#{users.middleName}" sortBy="#{users.middleName}" headerText="MiddleName">
+                                            <p:outputLabel value="#{users.middleName}" />
                                         </p:column>
-                                        <p:column filterBy="#{users.phone}" sortBy="#{users.phone}" headerText="phone">
-                                            <p:outputLabel value="#{users.phone}" />
+                                        <p:column filterBy="#{users.lastName}" sortBy="#{users.lastName}" headerText="LastName">
+                                            <p:outputLabel value="#{users.lastName}" />
                                         </p:column>
-                                        <p:column filterBy="#{users.username}" sortBy="#{users.username}" headerText="username">
-                                            <p:outputLabel value="#{users.username}" />
+                                        <p:column filterBy="#{users.userName}" sortBy="#{users.userName}" headerText="username">
+                                            <p:outputLabel value="#{users.userName}" />
                                         </p:column>
-                                        <p:column  sortBy="#{users.groupID.name}"  filterBy="#{users.groupID.name}" headerText ="Status">
-                                            <p:outputLabel value="#{users.groupID.name}"  style="display: block; color:GREEN" />
+                                        <p:column  sortBy="#{users.merchantID}"  filterBy="#{users.merchantID}" headerText ="merchantID">
+                                            <p:outputLabel value="#{users.merchantID}"  style="display: block; color:GREEN" />
+                                        </p:column>
+                                        <p:column  sortBy="#{users.status}"  filterBy="#{users.status}" headerText ="status">
+                                            <p:outputLabel value="#{users.status}"  style="display: block; color:GREEN" />
                                         </p:column>
                                         <p:column style="width:4%">
                                             <p:commandLink process="@this" styleClass="si-icon-16x16 si-icon-edit" update=":editForm:userDetail" oncomplete="PF('userDialog').show()"  value="DETAILS"   title="Edit  #{users.name}'s DETAILS">                                                  
-                                                <f:setPropertyActionListener value="#{users}"   target="#{maaif.users}" />  
+                                                <f:setPropertyActionListener value="#{users}"   target="#{Merchants.user}" />  
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
@@ -127,30 +146,48 @@
                                     <h:panelGrid columns="1">
                                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8"
                                                      layout="grid" styleClass="ui-fluid card">
-                                            <p:outputLabel value="Name"/>
-                                            <p:inputText    value="#{maaif.users.name}" />
-                                            <p:outputLabel value="Mobile phone"/>
-                                            <p:inputText      value="#{maaif.users.phone}" />
-                                            <p:outputLabel value="Status"/>
-                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{maaif.users.groupID}"  style="width: 200px" >
+                                            <p:outputLabel value="Branch"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.branchID}"  style="width: 200px" >
                                                 <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{maaif.group1List}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                                <f:selectItems value="#{Merchants.branchList}"  var="group" itemValue="#{group}" itemLabel="#{group.branchName}" />
                                             </p:selectOneMenu>
-                                                 <p:outputLabel value="Gender"/>
-                                            <p:selectOneRadio id="console"  value="#{maaif.users.gender}" >
-                                                <f:selectItem itemLabel="Male" itemValue="Male" />
-                                                <f:selectItem itemLabel="Female" itemValue="Female" />
-                                            </p:selectOneRadio>
-                                            <p:outputLabel value="Username"/>
-                                            <p:inputText      value="#{maaif.users.username}" />
-                                            <p:outputLabel value="Password"/>
-                                            <p:inputText      value="#{maaif.users.pword}" />
-                                            <p:outputLabel value="Email address"/>
-                                            <p:inputText    type="email"  value="#{maaif.users.email}" />
+                                            <p:outputLabel value="Status"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.status}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.statusList}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Country"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.country}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.branchList}"  var="group" itemValue="#{group}" itemLabel="#{group.country}" />
+                                            </p:selectOneMenu>
+                                            <p:outputLabel value="First Name"/>
+                                            <p:inputText    value="#{Merchants.user.firstName}" />
+                                            <p:outputLabel value="Middle Name"/>
+                                            <p:inputText    value="#{Merchants.user.middleName}" />
+                                            <p:outputLabel value="Last Name"/>
+                                            <p:inputText    value="#{Merchants.user.lastName}" />
+                                            <p:outputLabel value="User Name"/>
+                                            <p:inputText    value="#{Merchants.user.userName}" />
+                                            <p:outputLabel value="Phone number"/>
+                                            <p:inputText    value="#{Merchants.user.phoneNumber}" />
+                                            <p:outputLabel value="Confirmed Phone Number"/>
+                                            <p:inputText    value="#{Merchants.user.phoneNumberConfirmed}" />
+                                            <p:outputLabel value="Email"/>
+                                            <p:inputText    value="#{Merchants.user.email}" />
+                                            <p:outputLabel value="Confirmed Email"/>
+                                            <p:inputText    value="#{Merchants.user.emailConfirmed}" />
+                                            <p:outputLabel value="Merchant ID"/>
+                                            <p:inputText    value="#{Merchants.user.merchantID}" />
+                                            <p:outputLabel value="Merchant ID"/>
+                                            <p:selectOneMenu    converter="#{convertor}" immediate="true"  value="#{Merchants.user.merchantID}"  style="width: 200px" >
+                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{Merchants.merchantsList}"  var="group" itemValue="#{group}" itemLabel="#{group.name}" />
+                                            </p:selectOneMenu>
                                             <p:messages for="userForm"  showDetail="true" />
                                         </p:panelGrid>
                                         <h:panelGrid columns="8">
-                                            <p:commandButton value="UPDATE"  icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.updateUser()}" />
+                                            <p:commandButton value="UPDATE"  icon="fa fa-plus" styleClass="btn-primary"  action="#{Merchants.editUser}" />
                                         </h:panelGrid>
                                     </h:panelGrid>
 

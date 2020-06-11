@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,18 +24,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author FAZOUL
+ * @author Amon.Sabul
  */
 @Entity
 @Table(name = "audit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Audit.findAll", query = "SELECT a FROM Audit a"),
-    @NamedQuery(name = "Audit.findByIdaudit", query = "SELECT a FROM Audit a WHERE a.idaudit = :idaudit"),
-    @NamedQuery(name = "Audit.findByTimer", query = "SELECT a FROM Audit a WHERE a.timer = :timer"),
-    @NamedQuery(name = "Audit.findByAction", query = "SELECT a FROM Audit a WHERE a.action = :action"),
-    @NamedQuery(name = "Audit.findByPurchase", query = "SELECT a FROM Audit a WHERE a.purchase = :purchase")})
+    @NamedQuery(name = "Audit.findAll", query = "SELECT a FROM Audit a")
+    , @NamedQuery(name = "Audit.findByIdaudit", query = "SELECT a FROM Audit a WHERE a.idaudit = :idaudit")
+    , @NamedQuery(name = "Audit.findByTimer", query = "SELECT a FROM Audit a WHERE a.timer = :timer")
+    , @NamedQuery(name = "Audit.findByCreatedby", query = "SELECT a FROM Audit a WHERE a.createdby = :createdby")
+    , @NamedQuery(name = "Audit.findByAction", query = "SELECT a FROM Audit a WHERE a.action = :action")
+    , @NamedQuery(name = "Audit.findByPurchase", query = "SELECT a FROM Audit a WHERE a.purchase = :purchase")})
 public class Audit implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,15 +51,17 @@ public class Audit implements Serializable {
     private Date timer;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "createdby")
+    private String createdby;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "action")
     private String action;
     @Size(max = 45)
     @Column(name = "purchase")
     private String purchase;
-    @JoinColumn(name = "createdby", referencedColumnName = "idusers")
-    @ManyToOne(optional = false)
-    private User createdby;
 
     public Audit() {
     }
@@ -68,9 +70,10 @@ public class Audit implements Serializable {
         this.idaudit = idaudit;
     }
 
-    public Audit(Integer idaudit, Date timer, String action) {
+    public Audit(Integer idaudit, Date timer, String createdby, String action) {
         this.idaudit = idaudit;
         this.timer = timer;
+        this.createdby = createdby;
         this.action = action;
     }
 
@@ -90,6 +93,14 @@ public class Audit implements Serializable {
         this.timer = timer;
     }
 
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+
     public String getAction() {
         return action;
     }
@@ -104,14 +115,6 @@ public class Audit implements Serializable {
 
     public void setPurchase(String purchase) {
         this.purchase = purchase;
-    }
-
-    public User getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(User createdby) {
-        this.createdby = createdby;
     }
 
     @Override
@@ -136,7 +139,7 @@ public class Audit implements Serializable {
 
     @Override
     public String toString() {
-        return "com.amon.db.Audit[ idaudit=" + idaudit + " ]";
+        return "db.Audit[ idaudit=" + idaudit + " ]";
     }
     
 }

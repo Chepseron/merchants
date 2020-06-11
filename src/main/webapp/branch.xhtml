@@ -52,55 +52,71 @@
                     </p:splitButton>
                 </h:form>
                 <p:separator/>
-                <p:panel id="spanel">
+
+                <p:panel id="spanel"   style="margin: 4em; background: transparent;  position: relative; border: 0">
                     <h:panelGrid columns="1">
-                     
                         <p:growl id="msgs1" sticky="true" showDetail="true" />
-                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"    style="background: transparent; width: 100%; height: 100%; border: 0" >  
-                            <p:tab title="MANAGE AGRO DEALER CHANNELS" >
-                                <h:form id="channelsForm" style="width: auto" > 
+                        <p:tabView  styleClass="si-icon-16x16 si-icon-edit"     style="background: transparent; width: 100%; height: 100%; border: 0" >  
+                            <p:tab title="MANAGE BRANCHES" >
+                                <h:form id="banksForm" style="width: auto" > 
                                     <h:panelGrid columns="1" >
                                         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
                                                      layout="grid" styleClass="ui-fluid card">
-                                            <p:outputLabel value="Contact phone"/>
-                                            <p:inputText      value="#{maaif.channels.contactphone}" />
-                                            <p:outputLabel value="Channel name"/>
-                                            <p:inputText      value="#{maaif.channels.name}" />
-                                            <p:outputLabel value="Region"/>
-                                            <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.channels.region}"  style="width: 200px" >
-                                                <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{maaif.regionsList}"  var="actorID" itemValue="#{actorID}" itemLabel="#{actorID.county}, #{actorID.province}, #{actorID.constituency}" />
-                                            </p:selectOneMenu>
+                                            <p:outputLabel value="Branch code"/>
+                                            <p:inputText      value="#{Merchants.branch.branchCode}" />
+                                            <p:outputLabel value="Branch name"/>
+                                            <p:inputText      value="#{Merchants.branch.branchName}" />
+                                            <p:outputLabel value="Country"/>
+                                            <p:inputText      value="#{Merchants.branch.country}" />
+                                            <p:outputLabel value="Merchant ID"/>
+                                            <p:inputText      value="#{Merchants.branch.merchantID}" />
+                                            <p:outputLabel value="Mobile Number"/>
+                                            <p:inputText      value="#{Merchants.branch.mobileNumber}" />
                                             <p:messages for="userForm"  showDetail="true" />
                                         </p:panelGrid>
                                         <h:panelGrid columns="8">
-                                            <p:commandButton value="SUBMIT"  ajax="false" icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.createDistributionchannel()}" />
+                                            <p:commandButton value="SUBMIT"  ajax="false" icon="fa fa-plus" styleClass="btn-primary"  action="#{Merchants.createBranch}" />
                                         </h:panelGrid>
                                     </h:panelGrid>
                                 </h:form>
                             </p:tab>
-                            <p:tab title="CREATED CHANNELS">
-                                <h:form id="channelsdAnimalsForm" style="width: auto" >
-                                    <p:dataTable var="channels" value="#{maaif.channelList}" widgetVar="usersTable"
+                            <p:tab title="CREATED BRANCHES">
+                                <h:form id="banksdAnimalsForm" style="width: auto" >
+                                    <p:dataTable var="banks" value="#{Merchants.branchList}" widgetVar="usersTable"
                                                  paginator="true" rows="10"
                                                  style="background: transparent; font-size:11px"
-                                                 id="channelssTable"
-                                                 emptyMessage="No channels found with given criteria" filteredValue="#{maaif.channelList}">
-                                        <p:column filterBy="#{channels.agrodealer.companyname}" sortBy="#{channels.agrodealer.companyname}" headerText="company">
-                                            <p:outputLabel value="#{channels.agrodealer.companyname}" />
+                                                 id="bankssTable"
+                                                 emptyMessage="No banks found with given criteria" filteredValue="#{Merchants.branchList}">
+                                        <p:column filterBy="#{banks.branchCode}" sortBy="#{banks.branchCode}" headerText="branchCode">
+                                            <p:outputLabel value="#{banks.branchCode}" />
                                         </p:column>
-                                        <p:column filterBy="#{channels.contactphone}" sortBy="#{channels.contactphone}" headerText="contact phone">
-                                            <p:outputLabel value="#{channels.contactphone}" />
+                                        <p:column filterBy="#{banks.branchName}" sortBy="#{banks.branchName}" headerText="branchName">
+                                            <p:outputLabel value="#{banks.branchName}" />
                                         </p:column>
-                                        <p:column filterBy="#{channels.region.constituency}" sortBy="#{channels.region.constituency}" headerText="Constituency">
-                                            <p:outputLabel value="#{channels.region.constituency}" />
+
+                                        <p:column filterBy="#{banks.country}" sortBy="#{banks.country}" headerText="country">
+                                            <p:outputLabel value="#{banks.country}" />
                                         </p:column>
-                                        <p:column filterBy="#{channels.name}" sortBy="#{channels.name}" headerText="Name">
-                                            <p:outputLabel value="#{channels.name}" />
+
+                                        <p:column filterBy="#{banks.createdBy}" sortBy="#{banks.createdBy}" headerText="createdBy">
+                                            <p:outputLabel value="#{banks.createdBy}" />
                                         </p:column>
+
+                                        <p:column filterBy="#{banks.createdOn}" sortBy="#{banks.createdOn}" headerText="createdOn">
+                                            <p:outputLabel value="#{banks.createdOn}" />
+                                        </p:column>
+
+                                        <p:column filterBy="#{banks.merchantID}" sortBy="#{banks.merchantID}" headerText="merchantID">
+                                            <p:outputLabel value="#{banks.merchantID}" />
+                                        </p:column>
+
+                                        <p:column filterBy="#{banks.mobileNumber}" sortBy="#{banks.mobileNumber}" headerText="mobileNumber">
+                                            <p:outputLabel value="#{banks.mobileNumber}" />
+                                        </p:column>
+
                                         <p:column style="width:4%">
-                                            <p:commandLink process="@this" styleClass="si-icon-16x16 si-icon-edit" update=":editForm:channelsDetail" oncomplete="PF('channelsDialog').show()"  value="DETAILS"   title="Edit  #{channels.name}'s DETAILS">                                                  
-                                                <f:setPropertyActionListener value="#{channels}"   target="#{maaif.channels}" />  
+                                            <p:commandLink process="@this" styleClass="si-icon-16x16 si-icon-edit" update=":editForm:banksDetail" oncomplete="PF('banksDialog').show()"  value="DETAILS"   title="Edit  #{banks.bankname}'s DETAILS">                                                  
+                                                <f:setPropertyActionListener value="#{banks}"   target="#{Merchants.merchants}" />  
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
@@ -108,25 +124,26 @@
                             </p:tab>
                         </p:tabView>
                         <h:form id="editForm">
-                            <p:dialog header="Project" dynamic="true" widgetVar="channelsDialog" showEffect="clip"  hideEffect="explode" resizable="false">
-                                <p:outputPanel id="channelsDetail" style="text-align:center;">  
+                            <p:dialog header="Branches" dynamic="true" widgetVar="banksDialog" showEffect="clip"  hideEffect="explode" resizable="false">
+                                <p:outputPanel id="banksDetail" style="text-align:center;">  
                                     <h:form> 
                                         <h:panelGrid columns="1" >
                                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
                                                          layout="grid" styleClass="ui-fluid card">
-                                                <p:outputLabel value="Contact phone"/>
-                                                <p:inputText      value="#{maaif.channels.contactphone}" />
-                                                <p:outputLabel value="Channel name"/>
-                                                <p:inputText      value="#{maaif.channels.name}" />
-                                                <p:outputLabel value="Region"/>
-                                                <p:selectOneMenu     converter="#{convertor}"  value="#{maaif.channels.region}"  style="width: 200px" >
-                                                    <f:selectItem itemLabel=" " itemValue="" noSelectionOption="true" />
-                                                    <f:selectItems value="#{maaif.regionsList}"  var="actorID" itemValue="#{actorID}" itemLabel="#{actorID.county}, #{actorID.province}, #{actorID.constituency}" />
-                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Branch code"/>
+                                                <p:inputText      value="#{Merchants.branch.branchCode}" />
+                                                <p:outputLabel value="Branch name"/>
+                                                <p:inputText      value="#{Merchants.branch.branchName}" />
+                                                <p:outputLabel value="Country"/>
+                                                <p:inputText      value="#{Merchants.branch.country}" />
+                                                <p:outputLabel value="Merchant ID"/>
+                                                <p:inputText      value="#{Merchants.branch.merchantID}" />
+                                                <p:outputLabel value="Mobile Number"/>
+                                                <p:inputText      value="#{Merchants.branch.mobileNumber}" />
                                                 <p:messages for="userForm"  showDetail="true" />
                                             </p:panelGrid>
                                             <h:panelGrid columns="8">
-                                                <p:commandButton value="SUBMIT"  ajax="false" icon="fa fa-plus" styleClass="btn-primary"  action="#{maaif.updateDistributionchannel()}" />
+                                                <p:commandButton value="SUBMIT"  ajax="false" icon="fa fa-plus" styleClass="btn-primary"  action="#{Merchants.editMerchant}" />
                                             </h:panelGrid>
                                         </h:panelGrid>
                                     </h:form>
